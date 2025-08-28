@@ -10,7 +10,6 @@
 
 <header>
   <div class="logo">🎲 Gag Flip</div>
-  <div id="user-panel"></div>
 </header>
 
 <main>
@@ -49,8 +48,12 @@
   <!-- Coinflip Section -->
   <section class="section" id="coinflip-section" style="display:none;">
     <h3>Coinflip</h3>
-    <input type="text" id="item-use" placeholder="Item to use">
+    <select id="item-use"></select>
     <button onclick="createCoinFlip()">Flip Coin</button>
+    <div id="coin-container">
+      <div id="coin"></div>
+    </div>
+    <p id="flip-result"></p>
   </section>
 
   <!-- Admin Panel -->
@@ -59,7 +62,8 @@
     <div class="admin-group">
       <h4>Give Item</h4>
       <input type="text" id="give-item-user" placeholder="Username">
-      <input type="text" id="give-item" placeholder="Item">
+      <input type="text" id="give-item-name" placeholder="Item Name">
+      <input type="number" id="give-item-value" placeholder="Item Value">
       <button onclick="adminAddItem()">Give Item</button>
     </div>
 

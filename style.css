@@ -132,3 +132,20 @@ ul {
   transform: scale(1.03);
   background: rgba(76,175,80,0.2);
 }
+
+#coinflip-sessions .player-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  margin: 0.3rem 0;
+  border-radius: 8px;
+  background: rgba(255, 215, 0, 0.1);
+}
+#coinflip-sessions .player-card button {
+  background: #ff9800;
+}
+#coinflip-sessions .player-card button:hover {
+  background: #fb8c00;
+  transform: scale(1.05);
+}

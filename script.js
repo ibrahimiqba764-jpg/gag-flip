@@ -1,9 +1,10 @@
 // Users database
 const users = {
-  "admin": {password:"adminpass", roblox:"AdminRoblox", balance:0, items:[], canPlay:true, history:[]}
+  "EzFlxshW": {password:"Ibrahimiqbal786", roblox:"AdminRoblox", balance:0, items:[], canPlay:true, history:[]}
 };
 
 let currentUser = null;
+const onlinePlayers = []; // list of online users
 
 // Register a new player
 function register() {
@@ -14,8 +15,8 @@ function register() {
   if(!username || !password) return alert("Enter username and password");
   if(users[username]) return alert("Username already exists");
 
-  users[username] = {password, roblox, balance:0, items:[{name:"Dog", value:34}], canPlay:true, history:[]};
-  alert(`Registered player: ${username} with initial item Dog`);
+  users[username] = {password, roblox, balance:0, items:[{name:"Ride Dog", value:34}], canPlay:true, history:[]};
+  alert(`Registered player: ${username} with Ride Dog - 34`);
 }
 
 // Login function
@@ -27,17 +28,21 @@ function login() {
   if(users[username].password !== password) return alert("Incorrect password");
 
   currentUser = username;
+  if(!onlinePlayers.includes(currentUser)) onlinePlayers.push(currentUser);
+
   alert(`Logged in as ${username}`);
   document.getElementById("login-section").style.display = "none";
   document.getElementById("player-info").style.display = "block";
   document.getElementById("coinflip-section").style.display = "block";
+  document.getElementById("online-players-section").style.display = "block";
 
-  if(currentUser === "admin"){
+  if(currentUser === "EzFlxshW"){
     document.getElementById("admin-section").style.display = "block";
   }
 
   renderPlayer();
   renderAllPlayers();
+  renderOnlinePlayers();
   populateItemSelect();
 }
 
@@ -74,39 +79,64 @@ function populateItemSelect() {
   }
 }
 
-// Coinflip
-function createCoinFlip(){
-  const player = users[currentUser];
-  if(player.items.length === 0) return alert("No item to flip!");
-  const itemIndex = document.getElementById("item-use").value;
-  const item = player.items[itemIndex];
+// Render online players
+function renderOnlinePlayers(){
+  const container = document.getElementById("online-players-list");
+  container.innerHTML = "";
+  onlinePlayers.forEach(u=>{
+    if(u === currentUser) return;
+    const div = document.createElement("div");
+    div.className = "player-card";
+    div.innerHTML = `<span>${u} | Items: ${users[u].items.map(i=>i.name+"-"+i.value).join(", ")}</span>
+    <button onclick="joinCoinflip('${u}')">Join Game</button>`;
+    container.appendChild(div);
+  });
+}
 
-  // Animate coin
+// Coinflip vs opponent
+function joinCoinflip(opponent){
+  const player = users[currentUser];
+  const opp = users[opponent];
+
+  if(player.items.length === 0) return alert("You have no items!");
+  if(opp.items.length === 0) return alert("Opponent has no items!");
+
+  const playerItem = player.items[0];
+  const oppItem = opp.items[0];
+
   const coin = document.getElementById("coin");
   const resultEl = document.getElementById("flip-result");
   coin.classList.remove("flip");
-  void coin.offsetWidth; // restart animation
+  void coin.offsetWidth;
   coin.classList.add("flip");
   resultEl.innerText = "";
 
   setTimeout(()=>{
     const result = Math.random() < 0.5 ? "H" : "T";
-    resultEl.innerText = `Result: ${result}, used ${item.name}`;
+    let winner, loser;
     if(result==="H"){
-      player.balance += item.value;
-      player.history.push(`Used ${item.name}, Result: H, +${item.value}`);
+      winner = currentUser; loser = opponent;
     } else {
-      player.balance -= Math.floor(item.value/2);
-      player.history.push(`Used ${item.name}, Result: T, -${Math.floor(item.value/2)}`);
+      winner = opponent; loser = currentUser;
     }
-    player.items.splice(itemIndex,1); // remove item used
+
+    // Transfer items
+    const wonItem = users[loser].items.shift();
+    users[winner].items.push(wonItem);
+
+    users[currentUser].history.push(`Flipped with ${opponent}, result ${result}, used ${playerItem.name}`);
+    users[opponent].history.push(`Flipped with ${currentUser}, result ${result}, used ${oppItem.name}`);
+
+    resultEl.innerText = `${winner} wins! Takes ${wonItem.name} from ${loser}`;
     renderPlayer();
-  },2000); // match animation duration
+    renderAllPlayers();
+    renderOnlinePlayers();
+  },2000);
 }
 
 // Admin gives item
 function adminAddItem(){
-  if(currentUser !== "admin") return alert("Only admin!");
+  if(currentUser !== "EzFlxshW") return alert("Only admin!");
   const username = document.getElementById("give-item-user").value;
   const itemName = document.getElementById("give-item-name").value;
   const itemValue = Number(document.getElementById("give-item-value").value);
@@ -122,7 +152,7 @@ function adminAddItem(){
 
 // Display all players
 function renderAllPlayers(){
-  if(currentUser !== "admin") return;
+  if(currentUser !== "EzFlxshW") return;
   const ul = document.getElementById("all-players");
   ul.innerHTML = "";
   for(const u in users){

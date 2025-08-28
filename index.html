@@ -1,1 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gag Flip Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">🎲 Gag Flip</div>
+  <div id="user-panel"></div>
+</header>
+
+<main>
+  <!-- Login Section -->
+  <section class="section" id="login-section">
+    <h3>Login</h3>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <input type="text" id="roblox" placeholder="Roblox Username">
+    <button onclick="login()">Login</button>
+  </section>
+
+  <!-- Player Info -->
+  <section class="section" id="player-info" style="display:none;">
+    <h3>Player Info</h3>
+    <p id="balance">Balance: 0</p>
+    <p id="items">Items: None</p>
+    <h4>Coinflip History</h4>
+    <ul id="history"></ul>
+  </section>
+
+  <!-- Coinflip Section -->
+  <section class="section" id="coinflip-section" style="display:none;">
+    <h3>Coinflip</h3>
+    <input type="text" id="item-use" placeholder="Item to use">
+    <button onclick="createCoinFlip()">Flip Coin</button>
+  </section>
+
+  <!-- Admin Panel -->
+  <section class="section" id="admin-section" style="display:none;">
+    <h3>Admin Panel</h3>
+
+    <div class="admin-group">
+      <h4>Deposit</h4>
+      <input type="text" id="deposit-user" placeholder="Username to deposit">
+      <input type="number" id="deposit-amount" placeholder="Amount">
+      <button onclick="adminDeposit()">Deposit</button>
+    </div>
+
+    <div class="admin-group">
+      <h4>Withdraw</h4>
+      <input type="text" id="withdraw-user" placeholder="Username to withdraw">
+      <input type="number" id="withdraw-amount" placeholder="Amount">
+      <button onclick="adminWithdraw()">Withdraw</button>
+    </div>
+
+    <div class="admin-group">
+      <h4>Give Item</h4>
+      <input type="text" id="give-item-user" placeholder="Username">
+      <input type="text" id="give-item" placeholder="Item">
+      <button onclick="adminAddItem()">Give Item</button>
+    </div>
+
+    <div class="admin-group">
+      <h4>All Players</h4>
+      <ul id="all-players"></ul>
+    </div>
+  </section>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
 

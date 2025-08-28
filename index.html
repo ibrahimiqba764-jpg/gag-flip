@@ -14,13 +14,27 @@
 </header>
 
 <main>
-  <!-- Login Section -->
+  <!-- Deposit & Withdraw Info -->
+  <section class="section" id="deposit-withdraw">
+    <div class="admin-links">
+      <h3>Deposit</h3>
+      <p>Join this person to deposit: <a href="https://www.roblox.com/users/5076150548/profile" target="_blank">Roblox Profile</a></p>
+    </div>
+    
+    <div class="admin-links">
+      <h3>Withdraw</h3>
+      <p>Join this person to withdraw: <a href="https://www.roblox.com/users/5076150548/profile" target="_blank">Roblox Profile</a></p>
+    </div>
+  </section>
+
+  <!-- Login & Register Section -->
   <section class="section" id="login-section">
-    <h3>Login</h3>
+    <h3>Login / Register</h3>
     <input type="text" id="username" placeholder="Username">
     <input type="password" id="password" placeholder="Password">
-    <input type="text" id="roblox" placeholder="Roblox Username">
+    <input type="text" id="roblox" placeholder="Roblox Username (optional for admin)">
     <button onclick="login()">Login</button>
+    <button onclick="register()">Register</button>
   </section>
 
   <!-- Player Info -->
@@ -42,21 +56,6 @@
   <!-- Admin Panel -->
   <section class="section" id="admin-section" style="display:none;">
     <h3>Admin Panel</h3>
-
-    <div class="admin-group">
-      <h4>Deposit</h4>
-      <input type="text" id="deposit-user" placeholder="Username to deposit">
-      <input type="number" id="deposit-amount" placeholder="Amount">
-      <button onclick="adminDeposit()">Deposit</button>
-    </div>
-
-    <div class="admin-group">
-      <h4>Withdraw</h4>
-      <input type="text" id="withdraw-user" placeholder="Username to withdraw">
-      <input type="number" id="withdraw-amount" placeholder="Amount">
-      <button onclick="adminWithdraw()">Withdraw</button>
-    </div>
-
     <div class="admin-group">
       <h4>Give Item</h4>
       <input type="text" id="give-item-user" placeholder="Username">
@@ -74,4 +73,3 @@
 <script src="script.js"></script>
 </body>
 </html>
-

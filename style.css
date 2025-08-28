@@ -34,7 +34,7 @@ main {
   margin-top: 0;
 }
 
-input {
+input, select {
   display: block;
   width: 100%;
   margin: .3rem 0 .8rem 0;
@@ -76,4 +76,36 @@ ul {
 
 .admin-links a:hover {
   text-decoration: underline;
+}
+
+/* Coin animation */
+#coin-container {
+  margin-top: 1rem;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#coin {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: gold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+.flip {
+  animation: flip 2s ease forwards;
+}
+
+@keyframes flip {
+  0% { transform: rotateY(0deg); }
+  50% { transform: rotateY(720deg); }
+  100% { transform: rotateY(1440deg); }
 }

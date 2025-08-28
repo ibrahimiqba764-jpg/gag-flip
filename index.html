@@ -54,7 +54,13 @@
   <section class="section" id="coinflip-section" style="display:none;">
     <h3>Coinflip</h3>
     <select id="item-use"></select>
-    <button onclick="createCoinFlip()">Flip Coin</button>
+    <button onclick="createCoinFlipSession()">Create Coinflip</button>
+
+    <div id="active-coinflips">
+      <h4>Active Coinflips</h4>
+      <div id="coinflip-sessions"></div>
+    </div>
+
     <div id="coin-container">
       <div id="coin"></div>
     </div>

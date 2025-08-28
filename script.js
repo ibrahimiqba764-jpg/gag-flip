@@ -5,20 +5,26 @@ const users = {
 
 let currentUser = null;
 
-// Login function
-function login() {
+// Register a new player
+function register() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
   const roblox = document.getElementById("roblox").value;
 
-  if(!users[username]){
-    users[username] = {password, roblox, balance:0, items:[], canPlay:false, history:[]};
-  }
+  if(!username || !password) return alert("Enter username and password");
+  if(users[username]) return alert("Username already exists");
 
-  if(users[username].password !== password){
-    alert("Incorrect password");
-    return;
-  }
+  users[username] = {password, roblox, balance:0, items:[], canPlay:false, history:[]};
+  alert(`Registered player: ${username}`);
+}
+
+// Login function
+function login() {
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  if(!users[username]) return alert("Username not found");
+  if(users[username].password !== password) return alert("Incorrect password");
 
   currentUser = username;
   alert(`Logged in as ${username}`);
@@ -73,45 +79,27 @@ function createCoinFlip(){
 }
 
 // Admin functions
-function adminDeposit(){
-  if(currentUser !== "admin") return alert("Only admin!");
-  const username = document.getElementById("deposit-user").value;
-  const amount = Number(document.getElementById("deposit-amount").value);
-  if(!users[username]) return alert("Player not found");
-  users[username].balance += amount;
-  alert(`Deposited ${amount} to ${username}`);
-  renderAllPlayers();
-}
-
-function adminWithdraw(){
-  if(currentUser !== "admin") return alert("Only admin!");
-  const username = document.getElementById("withdraw-user").value;
-  const amount = Number(document.getElementById("withdraw-amount").value);
-  if(!users[username]) return alert("Player not found");
-  if(users[username].balance < amount) return alert("Not enough balance");
-  users[username].balance -= amount;
-  alert(`Withdrew ${amount} from ${username}`);
-  renderAllPlayers();
-}
-
 function adminAddItem(){
   if(currentUser !== "admin") return alert("Only admin!");
   const username = document.getElementById("give-item-user").value;
   const item = document.getElementById("give-item").value;
+
   if(!users[username]) return alert("Player not found");
+
   users[username].items.push(item);
   users[username].canPlay = true;
   alert(`Gave item ${item} to ${username}`);
   renderAllPlayers();
 }
 
+// Display all players in admin panel
 function renderAllPlayers(){
   if(currentUser !== "admin") return;
   const ul = document.getElementById("all-players");
   ul.innerHTML = "";
   for(const u in users){
     const li = document.createElement("li");
-    li.innerText = `${u} | Roblox: ${users[u].roblox} | Balance: ${users[u].balance} | Items: ${users[u].items.join(", ") || "None"}`;
+    li.innerText = `${u} | Roblox: ${users[u].roblox || "N/A"} | Balance: ${users[u].balance} | Items: ${users[u].items.join(", ") || "None"}`;
     ul.appendChild(li);
   }
 }
